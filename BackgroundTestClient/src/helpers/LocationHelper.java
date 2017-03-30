@@ -9,6 +9,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.widget.Toast;
 
 public class LocationHelper implements LocationListener{
 
@@ -16,9 +17,12 @@ public class LocationHelper implements LocationListener{
 	private static LocationManager locationManager;
 	private static Context activityContext;
 	
-	private LocationHelper(Context aContext) {
+	public void init(Context aContext){
 		activityContext = aContext;
 		locationManager = (LocationManager)activityContext.getSystemService(Context.LOCATION_SERVICE);
+		if(getLocation() == null)
+			requestLocations();
+		
 	}
 	
 	public static Location getLocation() {//Change to use criteria instead of iteration
@@ -32,7 +36,7 @@ public class LocationHelper implements LocationListener{
 	            bestLocation = l;
 	    }
 	    if(bestLocation == null)
-	    	Log.error("LocationHelper", "lastKnownLocation is null");
+	    	Log.error("LocationHelper", "Last Known Location is null");
 	    return bestLocation;
 	}
 
@@ -43,19 +47,12 @@ public class LocationHelper implements LocationListener{
 	}
 	
 	private static void requestLocations(){
+		Toast toast = Toast.makeText(activityContext, "Requesting Location...", Toast.LENGTH_SHORT);
+		toast.show();
 		locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, context);
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, context);
 	}
-	
-	public static LocationHelper instanceOf(Context chicken){
-		if(context == null)
-			context = new LocationHelper(chicken);
-		
-		if(getLocation() == null)
-			requestLocations();
-		return context;
-	}
-	
+
 	public static boolean compareLocations(float distance, Location l1, Location l2){
 		return (l1.distanceTo(l2) <= distance);
 	}

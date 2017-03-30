@@ -2,6 +2,8 @@ package activity;
 
 import packets.AnswerPacket;
 import helpers.PacketHelper;
+import helpers.Singleton;
+import helpers.SingletonFactory;
 import service.BackgroundService;
 import android.app.Activity;
 import android.content.Context;
@@ -21,7 +23,7 @@ import com.example.backgroundtest2.R;
 public class MainActivity extends Activity {
 
 	public static final int waitingTime = 5000, tcp = 55555, udp = 44444;
-	public static String ip = "104.196.56.223";
+	public static String ip = "192.168.5.128";
 	public static SharedPreferences sharedPrefs;
 	public static SharedPreferences.Editor sharedPrefsEditor;
 	private static Context mContext;
@@ -29,14 +31,18 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
+    	
     	Log.set(Log.LEVEL_DEBUG);
+    	
         mContext = getApplicationContext();
         
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-        
+
         setContentView(R.layout.activity_main);
-               
+        
+        final PacketHelper packetHelper = (PacketHelper) SingletonFactory.getSingletonInstance(Singleton.PACKET_HELPER);
+
         //TODO: Everything below this is disgusting and should be changed completely
     	
 		final TextView textField = (TextView) findViewById(R.id.editText1);
@@ -48,7 +54,7 @@ public class MainActivity extends Activity {
 				if(!str.isEmpty()){
 					AnswerPacket packet = new AnswerPacket();
 					packet.str = str;
-					PacketHelper.instanceOf().sendPacket(packet);
+					packetHelper.sendPacket(packet);
 					textField.setText("");
 				}
 			}
@@ -90,4 +96,5 @@ public class MainActivity extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
+    
 }

@@ -8,19 +8,6 @@ import com.esotericsoftware.minlog.Log;
 
 public class ClientListener extends Listener{
 
-	private static ClientListener context;
-	
-	private ClientListener() {
-		Log.info("ClientListener", "ClientListener started");
-	}
-	
-	public static ClientListener getInstance(){
-		if(context == null)
-			context = new ClientListener();
-		
-		return context;
-	}
-	
 	@Override
 	public void connected(Connection arg0) {
 		Log.debug("ClientListener", "Connected to server, ID is " + arg0.getID());

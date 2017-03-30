@@ -1,35 +1,23 @@
 package runnables;
 
-import java.io.IOException;
+import helpers.Singleton;
+import helpers.SingletonFactory;
+
 
 import com.esotericsoftware.minlog.Log;
 
 import android.os.AsyncTask;
-import service.ClientBase;
 
 public class ClientRunnable extends AsyncTask<Void, Void, Void>{
-
-	private static ClientRunnable context;
 	
-	public ClientRunnable() throws IOException {
-		ClientBase.getInstance();
-	}
-
-	public static ClientRunnable instanceOf() throws IOException{
-		if(context == null)
-			context = new ClientRunnable();
-		return context;
+	public ClientRunnable() {
+		SingletonFactory.getSingletonInstance(Singleton.CLIENT);
 	}
 	
 	//TODO: This seems wrong, not too important though
 	@Override
 	protected Void doInBackground(Void... params) {
-		try {
-			ClientBase.getInstance();
-		} catch (IOException e) {
-			Log.error("ClientRunnable", e.toString());
-		}
-
+		SingletonFactory.getSingletonInstance(Singleton.CLIENT);
 		Log.info("ClientRunnable", "Runnable Started");
 		return null;
 	}
