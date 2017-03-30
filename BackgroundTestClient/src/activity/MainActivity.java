@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,14 +33,15 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
     	
-    	Log.set(Log.LEVEL_DEBUG);
+    	Log.set(Log.LEVEL_INFO);
     	
-        mContext = getApplicationContext();
         
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
         setContentView(R.layout.activity_main);
+
+        mContext = getApplicationContext();
         
         final PacketHelper packetHelper = (PacketHelper) SingletonFactory.getSingletonInstance(Singleton.PACKET_HELPER);
 

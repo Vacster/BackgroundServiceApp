@@ -3,13 +3,14 @@ package service;
 import helpers.LocationHelper;
 import helpers.Singleton;
 import helpers.SingletonFactory;
-
 import runnables.ClientRunnable;
 import runnables.DisconnectRunnable;
 
 import com.esotericsoftware.minlog.Log;
 
+import activity.MainActivity;
 import android.app.IntentService;
+import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 
@@ -17,7 +18,6 @@ public class BackgroundService extends IntentService{
 	
 	public BackgroundService() {
 		super("Service Thread");
-		//TODO: creating a new thread like this seems ugly
 		Thread thread = new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -32,7 +32,8 @@ public class BackgroundService extends IntentService{
 	@Override
 	public void onCreate() {
 		LocationHelper locationHelper = (LocationHelper) SingletonFactory.getSingletonInstance(Singleton.LOCATION_HELPER);
-		locationHelper.init(this);
+		Context activityContext = MainActivity.getContext();
+		locationHelper.init(activityContext == null ? this.getApplicationContext() : activityContext);
 		Location loc = LocationHelper.getLocation();
 		Log.info("BackgroundService", loc == null ? "No Location Found" : loc.toString());
 	}
