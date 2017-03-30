@@ -1,5 +1,8 @@
 package code;
 
+import helpers.Singleton;
+import helpers.SingletonFactory;
+
 import com.esotericsoftware.minlog.Log;
 
 public class BackgroundServer {
@@ -14,7 +17,8 @@ public class BackgroundServer {
 		
 		try {
 			Log.set(Integer.valueOf(args[2]).intValue());
-			ServerMain.getInstance(Integer.parseInt(args[0], 10), Integer.parseInt(args[1], 10));			
+			ServerMain serverMain = (ServerMain) SingletonFactory.getSingletonInstance(Singleton.ServerMain);
+			serverMain.init(Integer.parseInt(args[0], 10), Integer.parseInt(args[1], 10));			
 		} catch (Exception e) {
 			Log.error("Main", "Server exception: " + e.getMessage());
 		}

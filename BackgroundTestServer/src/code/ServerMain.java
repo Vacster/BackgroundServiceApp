@@ -10,10 +10,12 @@ import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.minlog.Log;
 
 public class ServerMain extends Server{
-
-	private static ServerMain context;
-
-	private ServerMain(int tcp, int udp) throws IOException{
+	
+	public ServerMain() {
+		Log.trace("ServerMain", "Instance Created.");
+	}
+	
+	public void init(int tcp, int udp) throws IOException{
 		bind(tcp, udp);
 		start();
 		KryoHelper.registerClasses(getKryo());	
@@ -22,11 +24,4 @@ public class ServerMain extends Server{
 		Log.info("ServerMain", "Server started.");
 	}
 
-	public static ServerMain getInstance(int tcp, int udp) throws IOException{
-		if(context == null)
-			context = new ServerMain(tcp, udp);
-
-		return context;
-	}
-	
 }

@@ -21,7 +21,7 @@ import com.example.backgroundtest2.R;
 public class MainActivity extends Activity {
 
 	public static final int waitingTime = 5000, tcp = 55555, udp = 44444;
-	public static String ip = "104.196.56.223";
+	public static String ip = "192.168.5.128";
 	public static SharedPreferences sharedPrefs;
 	public static SharedPreferences.Editor sharedPrefsEditor;
 	private static Context mContext;
