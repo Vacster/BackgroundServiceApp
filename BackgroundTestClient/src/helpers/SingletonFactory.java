@@ -16,9 +16,12 @@ public class SingletonFactory {
 				classFound = className.classType.newInstance();
 				map.put(className, classFound);
 			} catch (IllegalAccessException e) {
-				Log.error(e.getMessage());
+				Log.error("SingletonFactory", e.getMessage());
 			} catch (InstantiationException e) {
-				Log.error(e.getMessage());
+				Log.error("SingletonFactory", e.getMessage());
+			} catch (Exception e) {
+				Log.error("SingletonFactory", "Extra exception");
+				e.printStackTrace();
 			}
 		
 		return classFound;

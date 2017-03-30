@@ -1,8 +1,8 @@
 package service;
 
 import helpers.LocationHelper;
-
-import java.io.IOException;
+import helpers.Singleton;
+import helpers.SingletonFactory;
 
 import runnables.ClientRunnable;
 import runnables.DisconnectRunnable;
@@ -21,11 +21,8 @@ public class BackgroundService extends IntentService{
 		Thread thread = new Thread(new Runnable() {
 			@Override
 			public void run() {
-				try {
-					ClientRunnable.instanceOf().execute();
-				} catch (IOException e) {
-					Log.error("BackgroundService", e.toString());
-				}
+				ClientRunnable clientRunnable = (ClientRunnable) SingletonFactory.getSingletonInstance(Singleton.CLIENT_RUNNABLE);
+				clientRunnable.execute();
 			}
 		});
 		thread.start();
@@ -34,7 +31,8 @@ public class BackgroundService extends IntentService{
 	
 	@Override
 	public void onCreate() {
-		LocationHelper.instanceOf(this);
+		LocationHelper locationHelper = (LocationHelper) SingletonFactory.getSingletonInstance(Singleton.LOCATION_HELPER);
+		locationHelper.init(this);
 		Location loc = LocationHelper.getLocation();
 		Log.info("BackgroundService", loc == null ? "No Location Found" : loc.toString());
 	}
@@ -48,7 +46,8 @@ public class BackgroundService extends IntentService{
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		DisconnectRunnable.instanceOf().execute();
+		DisconnectRunnable disconnectRunnable = (DisconnectRunnable) SingletonFactory.getSingletonInstance(Singleton.DISCONNECT_RUNNABLE);
+		disconnectRunnable.execute();
 	}
 	
 	//TODO: investigate what flags do and see if they could be used to determine return object

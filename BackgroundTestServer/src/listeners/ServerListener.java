@@ -1,7 +1,6 @@
 package listeners;
 
 import packets.*;
-import code.ServerMain;
 
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
@@ -9,17 +8,8 @@ import com.esotericsoftware.minlog.Log;
 
 public class ServerListener extends Listener{
 	
-	private static ServerListener context;
-	
-	private ServerListener() {
+	public ServerListener() {
 		Log.info("ServerListener", "ServerListener started");
-	}
-	
-	public static ServerListener getInstance(ServerMain serverMain){
-		if(context == null)
-			context = new ServerListener();
-		
-		return context;
 	}
 
 	@Override

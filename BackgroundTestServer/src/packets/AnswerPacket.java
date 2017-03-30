@@ -4,5 +4,4 @@ public class AnswerPacket {
 
 	public String str;
 	
-	public AnswerPacket() {}
 }

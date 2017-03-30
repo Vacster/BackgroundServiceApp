@@ -12,7 +12,7 @@ public class BackgroundServer {
 		if(args.length != 3)
 		{
 			Log.error("Main", "Incorrect number of arguments, have " + args.length + " need 2.");
-			throw new Exception("Usage: BackgroundServer [TCPport] [UDPport] [Log-Level]");
+			throw new RuntimeException("Usage: BackgroundServer [TCPport] [UDPport] [Log-Level](1-4)");
 		}
 		
 		try {

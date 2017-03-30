@@ -4,7 +4,12 @@ import com.esotericsoftware.minlog.Log;
 
 public enum Singleton {
 
-	ServerMain("code.ServerMain"), ServerListener("listeners.ServerListener");
+	LOCATION_HELPER("helpers.LocationHelper"), 
+	CLIENT("service.ClientBase"), 
+	CLIENT_RUNNABLE("runnables.ClientRunnable"),
+	DISCONNECT_RUNNABLE("runnables.DisconnectRunnable"),
+	PACKET_HELPER("helpers.PacketHelper"),
+	CLIENT_LISTENER("service.ClientListener");
 
 	Class<?> classType;
 	
